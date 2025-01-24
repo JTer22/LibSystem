@@ -8,7 +8,7 @@ public class MainPage extends JFrame {
 
     private JButton getStartedButton;
     private JLabel welcomeLabel;
-    private JLabel signOutLabel; // Changed to match the instance variable
+    private JLabel signOutLabel;
 
     // Book class to store book details
     class Book {
@@ -27,18 +27,18 @@ public class MainPage extends JFrame {
         setTitle("Library");
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());  // Main layout for the JFrame
+        setLayout(new BorderLayout());
 
-        Font labelFont = new Font("Arial", Font.PLAIN, 12); 
+        Font labelFont = new Font("Arial", Font.PLAIN, 12);
 
         // LOGO
-        ImageIcon logoIcon = new ImageIcon("Books/book.png");  
-        Image img = logoIcon.getImage(); 
-        Image resizedImg = img.getScaledInstance(150, 150, Image.SCALE_SMOOTH); 
+        ImageIcon logoIcon = new ImageIcon("Books/book.png");
+        Image img = logoIcon.getImage();
+        Image resizedImg = img.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         logoIcon = new ImageIcon(resizedImg);
 
         JLabel logoLabel = new JLabel(logoIcon);
-        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Left panel DASHBOARD
         JPanel leftDashboard = new JPanel() {
@@ -47,16 +47,16 @@ public class MainPage extends JFrame {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
                 Color startColor = new Color(50, 20, 100);
-                Color endColor = new Color(188, 154, 248); 
+                Color endColor = new Color(188, 154, 248);
                 GradientPaint gradient = new GradientPaint(0, 0, startColor, getWidth(), getHeight(), endColor);
                 g2d.setPaint(gradient);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
         };
 
-        signOutLabel = new JLabel("<html><u>Sign out</u></html>"); // Use instance variable
+        signOutLabel = new JLabel("<html><u>Sign out</u></html>");
         signOutLabel.setFont(labelFont);
-        signOutLabel.setForeground(Color.BLACK); 
+        signOutLabel.setForeground(Color.BLACK);
         signOutLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         signOutLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -67,27 +67,28 @@ public class MainPage extends JFrame {
         });
 
         leftDashboard.setPreferredSize(new Dimension(150, 500));
-        leftDashboard.setLayout(new BoxLayout(leftDashboard, BoxLayout.Y_AXIS));  
+        leftDashboard.setLayout(new BoxLayout(leftDashboard, BoxLayout.Y_AXIS));
         leftDashboard.add(Box.createVerticalStrut(20));
-        leftDashboard.add(logoLabel); 
-        leftDashboard.add(Box.createVerticalStrut(20));  
+        leftDashboard.add(logoLabel);
+        leftDashboard.add(Box.createVerticalStrut(20));
         leftDashboard.add(Box.createVerticalGlue());
         leftDashboard.add(signOutLabel);
         add(leftDashboard, BorderLayout.WEST);
 
         // Right Panel with top dashboard inside it
         JPanel rightPanel = new JPanel();
-        rightPanel.setLayout(new BorderLayout()); // To handle top and center layout
+        rightPanel.setLayout(new BorderLayout());
 
         // Top Panel with Light Orange Background inside right panel
         JPanel topDashboard = new JPanel();
         topDashboard.setBackground(new Color(255, 229, 153)); // Very light orange
-        topDashboard.setLayout(new FlowLayout(FlowLayout.LEFT)); // FlowLayout for simple horizontal alignment
+        topDashboard.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         // Add buttons to the top dashboard panel
         JButton addBooksButton = new JButton("Add Books");
         JButton viewBooksButton = new JButton("View Books");
         JButton borrowButton = new JButton("Borrow");
+        JButton listButton = new JButton("List");
 
         // Customize buttons (optional)
         addBooksButton.setFont(new Font("Helvetica", Font.BOLD, 14));
@@ -98,17 +99,19 @@ public class MainPage extends JFrame {
         addBooksButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddBooksButton(); // Assuming AddBooksButton is a valid class
-                dispose();
+                Add addFrame = new Add();  // Create the Add frame
+                addFrame.setVisible(true);  // Make it visible
+                dispose();  // Close MainPage frame (optional)
             }
         });
+        
 
         // ActionListener for View Books button
         viewBooksButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new ViewBooksButton(); // Assuming ViewBooksButton is a valid class
-                dispose(); // Close the current dashboard frame
+                dispose();
             }
         });
 
@@ -117,7 +120,7 @@ public class MainPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new BorrowButton(); // Assuming BorrowButton is a valid class
-                dispose(); // Close the current dashboard frame
+                dispose();
             }
         });
 
@@ -127,11 +130,11 @@ public class MainPage extends JFrame {
         topDashboard.add(borrowButton);
 
         // Add the top dashboard to the north of the right panel
-        rightPanel.add(topDashboard, BorderLayout.NORTH); 
+        rightPanel.add(topDashboard, BorderLayout.NORTH);
 
         // Home Panel with books list inside the right panel
         JPanel homePanel = new JPanel();
-        homePanel.setLayout(new GridLayout(0, 3, 20, 20)); // 3 columns with 20px spacing
+        homePanel.setLayout(new GridLayout(0, 3, 20, 20));
 
         // Dummy book data
         List<Book> books = new ArrayList<>();
@@ -148,26 +151,26 @@ public class MainPage extends JFrame {
             bookPanel.setLayout(new BorderLayout());
 
             // Book Image
-            ImageIcon bookImage = new ImageIcon(book.imagePath);  // Use actual image paths
-            Image imgBook = bookImage.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH); // Resize image
+            ImageIcon bookImage = new ImageIcon(book.imagePath);
+            Image imgBook = bookImage.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
             bookImage = new ImageIcon(imgBook);
             JLabel bookImageLabel = new JLabel(bookImage);
             bookPanel.add(bookImageLabel, BorderLayout.CENTER);
 
-            // Book Title and Description - Center them below the image
+            // Book Title and Description
             JPanel textPanel = new JPanel();
-            textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS)); // BoxLayout for vertical stacking
+            textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 
             // Title
             JLabel bookTitle = new JLabel(book.title);
             bookTitle.setFont(new Font("Arial", Font.BOLD, 14));
-            bookTitle.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the title
+            bookTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
             textPanel.add(bookTitle);
 
             // Description
             JLabel bookDesc = new JLabel("<html>" + book.description + "</html>");
             bookDesc.setFont(new Font("Arial", Font.PLAIN, 12));
-            bookDesc.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the description
+            bookDesc.setAlignmentX(Component.CENTER_ALIGNMENT);
             textPanel.add(bookDesc);
 
             bookPanel.add(textPanel, BorderLayout.SOUTH);

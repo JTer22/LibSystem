@@ -10,13 +10,11 @@ public class ViewBooksButton extends JFrame {
     class Book {
         String title;
         String description;
-        String availability;  // Availability of the book
         String imagePath;  // Path to the image for each book
 
-        Book(String title, String description, String availability, String imagePath) {
+        Book(String title, String description, String imagePath) {
             this.title = title;
             this.description = description;
-            this.availability = availability;
             this.imagePath = imagePath;
         }
     }
@@ -62,34 +60,31 @@ public class ViewBooksButton extends JFrame {
 
         // Book data with image paths
         List<Book> books = new ArrayList<>();
-        books.add(new Book("Harry Potter", "A young wizard's journey.", "Available", "Books/book1.jpg"));
-        books.add(new Book("Mein Kampf", "Autobiography of Adolf Hitler.", "Not Available", "Books/book2.jpg"));
-        books.add(new Book("Jose Rizal", "A national hero's life.", "Available", "Books/book3.jpg"));
-        books.add(new Book("Never Seen", "A mysterious adventure.", "Available", "Books/book4.png"));
-        books.add(new Book("One Piece", "The journey for the One Piece treasure.", "Not Available", "Books/book5.jpg"));
-        books.add(new Book("BurstFade", "An action-packed story.", "Available", "Books/book6.jpg"));
+        books.add(new Book("Harry Potter", "A young wizard's journey.", "Books/book1.jpg"));
+        books.add(new Book("Mein Kampf", "Autobiography of Adolf Hitler.", "Books/book2.jpg"));
+        books.add(new Book("Jose Rizal", "A national hero's life.", "Books/book3.jpg"));
+        books.add(new Book("Never Seen", "A mysterious adventure.", "Books/book4.png"));
+        books.add(new Book("One Piece", "The journey for the One Piece treasure.", "Books/book5.jpg"));
+        books.add(new Book("BurstFade", "An action-packed story.", "Books/book6.jpg"));
 
         // Panel for labels above the list
         JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(new GridLayout(1, 4));  // Grid layout with 4 columns: Image, Title, Description, Availability
+        headerPanel.setLayout(new GridLayout(1, 3));  // Grid layout with 3 columns: Image, Title, Description
         JLabel imageLabel = new JLabel("");
         imageLabel.setFont(new Font("Arial", Font.BOLD, 14));
         JLabel titleLabel = new JLabel("Title");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
         JLabel descriptionLabel = new JLabel("Description");
         descriptionLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        JLabel availabilityLabel = new JLabel("Availability");
-        availabilityLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
         headerPanel.add(imageLabel);
         headerPanel.add(titleLabel);
         headerPanel.add(descriptionLabel);
-        headerPanel.add(availabilityLabel);
         rightPanel.add(headerPanel, BorderLayout.NORTH);
 
         // Panel to display book list
         JPanel bookListPanel = new JPanel();
-        bookListPanel.setLayout(new GridLayout(books.size(), 4));  // 4 columns for Image, Title, Description, Availability
+        bookListPanel.setLayout(new GridLayout(books.size(), 3));  // 3 columns for Image, Title, Description
 
         // Loop through books and create rows for each book
         for (Book book : books) {
@@ -108,20 +103,10 @@ public class ViewBooksButton extends JFrame {
             JLabel bookDescription = new JLabel(book.description);
             bookDescription.setFont(new Font("Arial", Font.PLAIN, 12));
 
-            // Availability label
-            JLabel bookAvailability = new JLabel(book.availability);
-            bookAvailability.setFont(new Font("Arial", Font.PLAIN, 12));
-            if (book.availability.equals("Available")) {
-                bookAvailability.setForeground(Color.GREEN);  // Set color to green for "Available"
-            } else if (book.availability.equals("Not Available")) {
-                bookAvailability.setForeground(Color.RED);  // Set color to red for "Not Available"
-            }
-
             // Add the image and labels to the bookListPanel
             bookListPanel.add(bookImageLabel);
             bookListPanel.add(bookTitle);
             bookListPanel.add(bookDescription);
-            bookListPanel.add(bookAvailability);
         }
 
         // Add book list panel to the center of the right panel
